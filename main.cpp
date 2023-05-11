@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <iostream>
 #include <iterator>
+#include <list>
 #include <ranges>
 #include <regex>
 #include <string>
@@ -24,6 +25,25 @@ enum class Statement : uint8_t
     CreateTable,
     RemoveTable,
     UnRecognized
+};
+
+struct Row
+{
+    int id {0};
+    char* data{nullptr};
+};
+
+struct Table
+{
+int id{0};
+    std::string_view shape{""};
+    std::vector<Row *> rows;
+};
+
+struct DataBase
+{
+    char* name{nullptr};
+    std::list<Table *> tables;
 };
 
 void print_prompt()
