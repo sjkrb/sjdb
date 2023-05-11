@@ -1,29 +1,47 @@
+#include <algorithm>
+#include <bits/ranges_algo.h>
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <iterator>
+#include <list>
 #include <memory>
 #include <ranges>
 #include <string>
 #include <string_view>
 #include <sys/types.h>
+#include <vector>
 
 enum class Meta_cammand : uint8_t
 {
     Exit,
+    CreateDataBase,
+    RemoveDataBase,
     UnRecognized
 };
 enum class Statement : uint8_t
 {
     Insert,
     Select,
+    Delete,
+    CreateTable,
+    RemoveTable,
     UnRecognized
 };
 
 void print_prompt()
 {
     std::cout << "db > ";
+}
+
+std::vector<std::string_view> tokenizer(std::string_view input)
+{
+    auto string_list = input | std::ranges::views::split(' ');
+
+    std::vector<std::string_view> tokens;
+    std::ranges::for_each(string_list, [&tokens](auto &&word) { tokens.emplace_back(word); });
 }
 
 void get_input(std::string &input)
@@ -59,15 +77,10 @@ void get_input(std::string &input)
 
 void handleStatement(const Statement &state, std::string_view input)
 {
+    auto tokens = tokenizer(input);
     switch (state)
     {
     case Statement::Select: {
-        std::cout << "this is the place that i should handle the select\n";
-        auto split_string = input | std::ranges::views::split(' ');
-        for (const auto &in : split_string)
-        {
-            std::cout << std::string_view{in.begin(), in.end()} << '\n';
-        }
         break;
     }
     case Statement::Insert:
