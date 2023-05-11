@@ -1,0 +1,48 @@
+#include <tuple>
+#include <string>
+
+template <typename... Args>
+std::tuple<Args...> create_tuple(const std::string& type_names)
+{
+    // Define a helper struct that maps type names to C++ types
+    template <const std::string&>
+    struct type_mapper;
+    
+    template <>
+    struct type_mapper<"int">
+    {
+        using type = int;
+    };
+    
+    template <>
+    struct type_mapper<"float">
+    {
+        using type = float;
+    };
+    
+    template <>
+    struct type_mapper<"bool">
+    {
+        using type = bool;
+    };
+    
+    template <>
+    struct type_mapper<"string">
+    {
+        using type = std::string;
+    };
+    
+    // Split the input string into individual type names
+    // and use the type mapper to convert them to C++ types
+    return std::make_tuple(typename type_mapper<Args>::type{}...);
+}
+
+int main()
+{
+    // Create a tuple of int, float, bool, and string
+    auto my_tuple = create_tuple<int, float, bool, std::string>("int,float,bool,string");
+    
+    // Do something with my_tuple...
+    
+    return 0;
+}

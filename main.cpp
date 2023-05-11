@@ -1,17 +1,12 @@
 #include <algorithm>
 #include <bits/ranges_algo.h>
-#include <cstddef>
 #include <cstdint>
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
 #include <iterator>
-#include <list>
-#include <memory>
 #include <ranges>
+#include <regex>
 #include <string>
 #include <string_view>
-#include <sys/types.h>
 #include <vector>
 
 enum class Meta_cammand : uint8_t
@@ -38,10 +33,14 @@ void print_prompt()
 
 std::vector<std::string_view> tokenizer(std::string_view input)
 {
-    auto string_list = input | std::ranges::views::split(' ');
-
     std::vector<std::string_view> tokens;
-    std::ranges::for_each(string_list, [&tokens](auto &&word) { tokens.emplace_back(word); });
+    auto splitted = input | std::ranges::views::split(' ');
+
+    for (const auto &in : splitted)
+    {
+        tokens.emplace_back(std::string_view{in.begin(), in.end()});
+    }
+    return tokens;
 }
 
 void get_input(std::string &input)
@@ -89,6 +88,10 @@ void handleStatement(const Statement &state, std::string_view input)
     case Statement::UnRecognized:
         std::cout << "unrecognized command\n";
         break;
+    case Statement::Delete:
+    case Statement::CreateTable:
+    case Statement::RemoveTable:
+        break;
     }
 }
 
@@ -107,6 +110,9 @@ int main()
                 exit(EXIT_SUCCESS);
                 break;
             case Meta_cammand::UnRecognized:
+                break;
+            case Meta_cammand::CreateDataBase:
+            case Meta_cammand::RemoveDataBase:
                 break;
             }
         }

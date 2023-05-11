@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.20)
 set(CMAKE_CXX_STANDARD 20)
 project(SJDB)
 
@@ -22,5 +22,4 @@ add_executable(sjdb ${SOURCES} ${HEADERS})
 # Set C++ standard
 set_target_properties(sjdb PROPERTIES
     CXX_STANDARD_REQUIRED YES
-    CXX_EXTENSIONS NO
 )
