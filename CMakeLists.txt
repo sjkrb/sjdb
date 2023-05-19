@@ -19,7 +19,11 @@ set(HEADERS
 # Create executable target
 add_executable(sjdb ${SOURCES} ${HEADERS})
 
-# Set C++ standard
+add_subdirectory(Src)
+target_link_libraries(sjdb SrcLib)
+add_subdirectory(Utils)
+target_link_libraries(sjdb utils)
+
 set_target_properties(sjdb PROPERTIES
     CXX_STANDARD_REQUIRED YES
 )

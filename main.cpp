@@ -9,42 +9,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
-
-enum class Meta_cammand : uint8_t
-{
-    Exit,
-    CreateDataBase,
-    RemoveDataBase,
-    UnRecognized
-};
-enum class Statement : uint8_t
-{
-    Insert,
-    Select,
-    Delete,
-    CreateTable,
-    RemoveTable,
-    UnRecognized
-};
-
-struct Row
-{
-    int id {0};
-    char* data{nullptr};
-};
-
-struct Table
-{
-int id{0};
-    std::string_view shape{""};
-    std::vector<Row *> rows;
-};
-
-struct DataBase
-{
-    char* name{nullptr};
-    std::list<Table *> tables;
-};
+#include "Src/enums.h"
 
 void print_prompt()
 {
@@ -109,8 +74,13 @@ void handleStatement(const Statement &state, std::string_view input)
         std::cout << "unrecognized command\n";
         break;
     case Statement::Delete:
+        std::cout << "this is the place that i should delete the database and check befor deleting";
+        break;
     case Statement::CreateTable:
+        std::cout << "this is the place that i should create a table";
+        break;
     case Statement::RemoveTable:
+        std::cout << "this is the place that i should remove a table";
         break;
     }
 }
@@ -130,9 +100,13 @@ int main()
                 exit(EXIT_SUCCESS);
                 break;
             case Meta_cammand::UnRecognized:
+
                 break;
             case Meta_cammand::CreateDataBase:
+
             case Meta_cammand::RemoveDataBase:
+                break;
+            case Meta_cammand::SelectDatabase:
                 break;
             }
         }
