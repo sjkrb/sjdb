@@ -39,7 +39,7 @@ void Shell::run()
                 std::cout << "un recognize command : " << input << "\n";
                 break;
             case Meta_cammand::CreateDataBase:
-//                CreateDataBase(metacommand.at(1));
+                CreateDataBase::create(metacommand.at(1));
                 break;
             case Meta_cammand::RemoveDataBase:
                 break;

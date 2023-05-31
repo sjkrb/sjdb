@@ -19,7 +19,7 @@ class CreateDataBase : public FileManager
 {
 public:
     CreateDataBase() = default;
-    void operator()(std::string_view filename);
+    static void create(std::string_view filename);
 };
 
 #endif // FILEMANAGER_H
