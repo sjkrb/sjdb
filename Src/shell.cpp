@@ -7,6 +7,7 @@
 #include <iterator>
 #include <list>
 
+#include "filemanager.h"
 #include "shell.h"
 
 std::unique_ptr<Shell> Shell::_shell = std::unique_ptr<Shell>{nullptr};
@@ -28,16 +29,18 @@ void Shell::run()
         get_input(input);
         if (input.at(0) == '.')
         {
-            switch (processMetaCommand(input))
+            std::vector<std::string_view> metacommand = tokenizer(input);
+            switch (processMetaCommand(metacommand.at(0)))
             {
             case Meta_cammand::Exit:
                 exit(EXIT_SUCCESS);
                 break;
             case Meta_cammand::UnRecognized:
-
+                std::cout << "un recognize command : " << input << "\n";
                 break;
             case Meta_cammand::CreateDataBase:
-
+//                CreateDataBase(metacommand.at(1));
+                break;
             case Meta_cammand::RemoveDataBase:
                 break;
             case Meta_cammand::SelectDatabase:
@@ -94,7 +97,15 @@ Meta_cammand Shell::processMetaCommand(std::string_view input)
         return Meta_cammand::Exit;
     }
 
-    std::cout << "undeclared : " << input << '\n';
+    if (input == ".create")
+        return Meta_cammand::CreateDataBase;
+
+    if (input == ".remove")
+        return Meta_cammand::RemoveDataBase;
+
+    if (input == ".select")
+        return Meta_cammand::SelectDatabase;
+
     return Meta_cammand::UnRecognized;
 }
 
