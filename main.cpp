@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <algorithm>
 #include <bits/ranges_algo.h>
 #include <cstdint>
@@ -84,37 +85,13 @@ void handleStatement(const Statement &state, std::string_view input)
         break;
     }
 }
+=======
+#include "Src/shell.h"
+>>>>>>> refs/remotes/origin/main
 
 int main()
 {
-    std::string input{""};
-    while (true)
-    {
-        print_prompt();
-        get_input(input);
-        if (input.at(0) == '.')
-        {
-            switch (processMetaCommand(input))
-            {
-            case Meta_cammand::Exit:
-                exit(EXIT_SUCCESS);
-                break;
-            case Meta_cammand::UnRecognized:
-
-                break;
-            case Meta_cammand::CreateDataBase:
-
-            case Meta_cammand::RemoveDataBase:
-                break;
-            case Meta_cammand::SelectDatabase:
-                break;
-            }
-        }
-        else
-        {
-            handleStatement(processStatement(input), input);
-        }
-    }
+    Shell::GetInstance()->run();
 
     return 0;
 }

@@ -1,8 +1,7 @@
 #ifndef NOTCOPYABLE_H
 #define NOTCOPYABLE_H
 
-class NotCopyable{
-  public:
+struct NotCopyable{
     NotCopyable() = default;
     ~NotCopyable() = default;
 
