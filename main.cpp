@@ -19,11 +19,11 @@ void print_prompt()
 std::vector<std::string_view> tokenizer(std::string_view input)
 {
     std::vector<std::string_view> tokens;
-    auto splitted = input | std::ranges::views::split(' ');
 
-    for (const auto &in : splitted)
+    for (const auto &in : input | std::ranges::views::split(' '))
     {
         tokens.emplace_back(std::string_view{in.begin(), in.end()});
+        // std::cout << tokens.at(tokens.size() -1) << std::endl;
     }
     return tokens;
 }
