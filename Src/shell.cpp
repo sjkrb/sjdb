@@ -26,7 +26,8 @@ void Shell::run()
     while (true)
     {
         print_prompt();
-        get_input(input);
+        if(!get_input(input))
+            continue;
         if (input.at(0) == '.')
         {
             std::vector<std::string_view> metacommand = tokenizer(input);
@@ -53,6 +54,7 @@ void Shell::run()
         }
     }
 }
+
 
 void Shell::handleStatement(const Statement &state, std::string_view input)
 {
@@ -109,27 +111,31 @@ Meta_cammand Shell::processMetaCommand(std::string_view input)
     return Meta_cammand::UnRecognized;
 }
 
-void Shell::get_input(std::string &input)
+bool Shell::get_input(std::string &input)
 {
     std::getline(std::cin, input);
 
     if (input.length() == 0)
     {
-        std::cout << "no command to execute";
+        std::cout << "no command to execute \n";
+        return false;
     }
+    return true;
 }
 
 std::vector<std::string_view> Shell::tokenizer(std::string_view input)
 {
     std::vector<std::string_view> tokens;
-    auto splitted = input | std::ranges::views::split(' ');
-
-    for (const auto &in : splitted)
+    for (const auto &in : input | std::ranges::views::split(' '))
     {
         tokens.emplace_back(std::string_view{in.begin(), in.end()});
+        // std::cout << tokens.at(tokens.size() - 1) << "shet " << std::endl;
     }
     return tokens;
 }
+
+
+
 
 void Shell::print_prompt()
 {
