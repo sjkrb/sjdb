@@ -128,7 +128,8 @@ std::vector<std::string_view> Shell::tokenizer(std::string_view input)
     std::vector<std::string_view> tokens;
     for (const auto &in : input | std::ranges::views::split(' '))
     {
-        tokens.emplace_back(std::string_view{in.begin(), in.end()});
+        if(!in.empty())
+            tokens.emplace_back(std::string_view{in.begin(), in.end()});
         // std::cout << tokens.at(tokens.size() - 1) << "shet " << std::endl;
     }
     return tokens;
