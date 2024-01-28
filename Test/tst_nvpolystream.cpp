@@ -30,9 +30,11 @@ TEST_CASE("POLYSTREAM") {
     if(!istrm->is_open())
         std::cout << "file is not open";
 
-    std::tuple<NVType<intVal>, NVType<stringVal<13>>, intVal, doubleVal> d;
+    std::tuple<NVType<intVal>, NVType<stringVal<13>>, NVType<intVal>, NVType<doubleVal>> d;
     REQUIRE(std::get<0>(d)(istrm)->value() == strlen("sajjad hastam"));
-    REQUIRE(std::get<1>(d)(istrm)->value() == std::string("sajjad hastam"));
+    REQUIRE(std::strncmp(std::get<1>(d)(istrm)->value() , "sajjad hastam", strlen("sajjad hastam")) == 0);
+    REQUIRE(std::get<2>(d)(istrm)->value() == 1234);
+    REQUIRE(std::get<3>(d)(istrm)->value() == 1.2345);
 
     istrm->close();
 

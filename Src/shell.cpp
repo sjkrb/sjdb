@@ -30,22 +30,27 @@ void Shell::run()
             continue;
         if (input.at(0) == '.')
         {
-            std::vector<std::string_view> metacommand = tokenizer(input);
-            switch (processMetaCommand(metacommand.at(0)))
-            {
-            case Meta_cammand::Exit:
-                exit(EXIT_SUCCESS);
-                break;
-            case Meta_cammand::UnRecognized:
-                std::cout << "un recognize command : " << input << "\n";
-                break;
-            case Meta_cammand::CreateDataBase:
-                CreateDataBase::create(metacommand.at(1));
-                break;
-            case Meta_cammand::RemoveDataBase:
-                break;
-            case Meta_cammand::SelectDatabase:
-                break;
+            try {
+                std::vector<std::string_view> metacommand = tokenizer(input);
+                switch (processMetaCommand(metacommand.at(0)))
+                {
+                case Meta_cammand::Exit:
+                    exit(EXIT_SUCCESS);
+                    break;
+                case Meta_cammand::UnRecognized:
+                    std::cout << "un recognize command : " << input << "\n";
+                    break;
+                case Meta_cammand::CreateDataBase:
+                    CreateDataBase::create(metacommand.at(1));
+                    break;
+                case Meta_cammand::RemoveDataBase:
+                    break;
+                case Meta_cammand::SelectDatabase:
+                    break;
+                }
+            }
+            catch (std::exception &e) {
+                std::cout << e.what();
             }
         }
         else
@@ -130,13 +135,9 @@ std::vector<std::string_view> Shell::tokenizer(std::string_view input)
     {
         if(!in.empty())
             tokens.emplace_back(std::string_view{in.begin(), in.end()});
-        // std::cout << tokens.at(tokens.size() - 1) << "shet " << std::endl;
     }
     return tokens;
 }
-
-
-
 
 void Shell::print_prompt()
 {
